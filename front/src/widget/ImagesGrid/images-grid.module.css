@@ -1,0 +1,73 @@
+.ImagesGridContainer {
+    &:empty {
+        padding: 24px 0;
+    }
+
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    padding: 48px 0;
+}
+
+.ImageCardContainer {
+    position: relative;
+
+    & > .ImageContainer {
+        width: 225px;
+        height: 225px;
+
+        & > img {
+            object-fit: cover;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+    &:hover {
+        & > .ImageContainer {
+            box-shadow: 0px 9px 18px rgba(0, 0, 0, 0.18), 0px 6px 5px rgba(0, 0, 0, 0.24);
+            display: flex;
+            transform: scale(calc(257 / 225), calc(256 / 225));
+        }
+
+        & > .ImageCardActions {
+            display: flex;
+        }
+    }
+
+    & > .ImageCardActions {
+        position: absolute;
+        bottom: -16px;
+        left: -16px;
+
+        width: 257px;
+        height: 94px;
+
+        display: none;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 23px 17px;
+
+        background-image: linear-gradient(to top, #fff 0%, rgba(255, 255, 255, 0) 100%);
+
+        & > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+
+            & > svg * {
+                fill: var(--red-hovered);
+            }
+
+            &:active {
+                & > svg * {
+                    fill: var(--red-clicked);
+                }
+            }
+        }
+    }
+}

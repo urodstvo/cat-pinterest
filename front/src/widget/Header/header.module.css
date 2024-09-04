@@ -1,0 +1,52 @@
+.Header {
+    height: var(--header-height);
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--blue-primary);
+
+    display: flex;
+    justify-content: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24);
+}
+
+.Nav {
+    height: 100%;
+
+    display: flex;
+
+    & > a {
+        text-decoration: none;
+
+        & > div {
+            color: #fff;
+            line-height: var(--header-line-height);
+            font-size: var(--header-font-size);
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.selected {
+                background-color: var(--blue-selected);
+            }
+
+            &:not(.selected) {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        &:first-of-type > div {
+            width: 120px;
+        }
+
+        &:last-of-type > div {
+            width: 173px;
+        }
+    }
+}
