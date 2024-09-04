@@ -8,12 +8,12 @@ import { ImagesResponse } from '@/shared/types/imagesResponse';
 import { useInView } from 'react-intersection-observer';
 
 export const HomePage = () => {
-    const { ref, inView } = useInView({ threshold: 0 });
-
     useTitle('Cat Pinterest');
 
+    const { ref, inView } = useInView({ threshold: 0 });
+
     const [page, setPage] = useState(1);
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [_, setIsSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState<ImagesResponse>([]);
