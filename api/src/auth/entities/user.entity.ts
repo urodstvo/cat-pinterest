@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { LikeEntity } from 'src/like/entities/like.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -10,4 +11,7 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @OneToMany(() => LikeEntity, (like) => like.user)
+  likes: LikeEntity[];
 }

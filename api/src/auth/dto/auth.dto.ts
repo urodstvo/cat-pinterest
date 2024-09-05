@@ -1,6 +1,6 @@
 import { IsString, MinLength } from 'class-validator';
 
-export class SignUpDto {
+export class AuthDTO {
   @IsString()
   @MinLength(3, { message: 'Логин должен быть не короче 3 символов' })
   login: string;
