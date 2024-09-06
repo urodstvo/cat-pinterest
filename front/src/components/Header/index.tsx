@@ -5,6 +5,7 @@ import { useLocation } from '@/shared/hooks';
 
 export const Header = () => {
     const location = useLocation();
+
     return (
         <header className={styles.Header}>
             <nav className={styles.Nav}>

@@ -1,19 +1,30 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { HeartOutlineIcon } from '@/shared/icons/heartOutline';
 import { HeartFilledIcon } from '@/shared/icons/heartFilled';
-import { useAuthActionsStore, useFavoritesStore } from '@/components/Provider';
-
-import styles from './images-grid.module.css';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useAuthActionsStore, useFavoritesStore, useAuthStore } from '@/components/Provider';
 import { addLikesRequest, deleteLikeRequest } from '@/shared/api';
 import { LikeEntity } from '@/shared/types';
 
+import styles from './images-grid.module.css';
+import { FAVORITES_PAGE_URL } from '@/shared/constants';
+
 const HeartButton = ({ isFavorite, onClick }: { isFavorite: boolean; onClick: () => void }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const store = useAuthStore();
+
+    const handleClick = useCallback(() => {
+        if (!store.isAuthenticated) {
+            window.history.pushState(null, '', FAVORITES_PAGE_URL);
+            window.dispatchEvent(new Event('popstate'));
+        } else {
+            onClick();
+        }
+    }, [store]);
 
     return (
-        <button onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={onClick}>
+        <button onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={handleClick}>
             {isHovered || isFavorite ? <HeartFilledIcon /> : <HeartOutlineIcon />}
         </button>
     );
