@@ -12,7 +12,7 @@ export class LikeEntity {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
 
-  @Column()
+  @Column({ unique: true })
   cat_id: string;
 
   @CreateDateColumn()

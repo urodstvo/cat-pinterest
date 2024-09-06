@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  MethodNotAllowedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { LikeEntity } from './entities/like.entity';
@@ -25,12 +29,16 @@ export class LikesService {
   }
 
   async addLike(userId: string, catId: string) {
-    const user = await this.userRepository.findOneBy({ id: userId });
-    const like = new LikeEntity();
-    like.cat_id = catId;
-    like.user = user;
+    try {
+      const user = await this.userRepository.findOneBy({ id: userId });
+      const like = new LikeEntity();
+      like.cat_id = catId;
+      like.user = user;
 
-    return await this.likeRepository.save(like);
+      return await this.likeRepository.save(like);
+    } catch {
+      throw new MethodNotAllowedException('Invalid input');
+    }
   }
 
   async deleteLike(likeId: string) {

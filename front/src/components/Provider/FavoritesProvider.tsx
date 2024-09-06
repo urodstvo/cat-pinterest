@@ -15,11 +15,13 @@ export const FavoritesProvider = ({ children }: { children: React.ReactNode }) =
         queryKey: ['favorites'],
         queryFn: async () => {
             const res = await getLikesRequest();
-            if (!res.ok)
+            if (res.status === 401)
                 setAuth({
                     isAuthenticated: false,
                     token: '',
                 });
+
+            if (!res.ok) throw new Error('');
             return (await res.json()) as LikesResponse;
         },
         enabled: !!token,

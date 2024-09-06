@@ -44,6 +44,7 @@ const UnAuthorizedPage = () => {
     return (
         <main>
             <h2 className={styles.Title}>Войдите в аккаунт, если хотите сохранить своих любимчиков</h2>
+            {mutation.isError && <p className={styles.FormError}>Произошла ошибка при входе в аккаунт.</p>}
             <div className={styles.FormContainer}>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.Form}>
                     <div className={styles.FormInput}>
@@ -78,7 +79,8 @@ const AuthorizedPage = () => {
 
     return (
         <main>
-            <ImagesGrid ids={favorites.map((id) => id.cat_id)} />;
+            {!favorites.length && <p style={{ textAlign: 'center' }}>Ничего не найдено</p>}
+            <ImagesGrid ids={favorites.map((id) => id.cat_id)} />
         </main>
     );
 };

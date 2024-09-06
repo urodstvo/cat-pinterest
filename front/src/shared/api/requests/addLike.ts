@@ -1,11 +1,9 @@
 import { BACKEND_URL } from '@/shared/constants/env';
 
 export const addLikesRequest = async (catId: string) => {
-    const url = new URL(BACKEND_URL + '/likes');
-
     const token = localStorage.getItem('access_token');
 
-    return await fetch(url, {
+    return await fetch(BACKEND_URL + '/likes', {
         method: 'POST',
         body: JSON.stringify({ catId }),
         headers: {

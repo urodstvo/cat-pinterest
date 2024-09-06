@@ -1,9 +1,7 @@
 import { BACKEND_URL } from '@/shared/constants/env';
 
 export const authRequest = async (login: string, password: string) => {
-    const url = new URL(BACKEND_URL + '/auth');
-
-    return await fetch(url, {
+    return await fetch(BACKEND_URL + '/auth', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         mode: 'cors',
