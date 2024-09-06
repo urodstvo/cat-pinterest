@@ -1,32 +1,110 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import { HeartOutlineIcon } from '@/shared/icons/heartOutline';
 import { HeartFilledIcon } from '@/shared/icons/heartFilled';
+import { useAuthActionsStore, useFavoritesStore } from '@/components/Provider';
 
 import styles from './images-grid.module.css';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addLikesRequest, deleteLikeRequest } from '@/shared/api';
+import { LikeEntity } from '@/shared/types';
 
-const HeartButton = () => {
+const HeartButton = ({ isFavorite, onClick }: { isFavorite: boolean; onClick: () => void }) => {
     const [isHovered, setIsHovered] = useState(false);
+
     return (
-        <button onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-            {isHovered ? <HeartFilledIcon /> : <HeartOutlineIcon />}
+        <button onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onClick={onClick}>
+            {isHovered || isFavorite ? <HeartFilledIcon /> : <HeartOutlineIcon />}
         </button>
     );
 };
 
-export const ImagesGrid = ({ data }: { data: { id: string; url: string }[] }) => {
+const ImageCard = memo(
+    ({
+        cat_id,
+        like_id,
+        addLike,
+        deleteLike,
+    }: {
+        cat_id: string;
+        like_id?: string;
+        isFavorite: boolean;
+        addLike: (variables: { catId: string }) => void;
+        deleteLike: (variables: { id: string }) => void;
+    }) => {
+        const handleClick = () => {
+            if (!like_id) addLike({ catId: cat_id });
+            else deleteLike({ id: like_id });
+        };
+
+        return (
+            <div className={styles.ImageCardContainer}>
+                <div className={styles.ImageContainer}>
+                    <img src={`https://cdn2.thecatapi.com/images/${cat_id}.jpg`} />
+                </div>
+                <div className={styles.ImageCardActions}>
+                    <HeartButton isFavorite={!!like_id} onClick={handleClick} />
+                </div>
+            </div>
+        );
+    },
+);
+
+ImageCard.displayName = 'ImageCard';
+
+export const ImagesGrid = memo(({ ids }: { ids: string[] }) => {
+    const favorites = useFavoritesStore();
+
+    const queryClient = useQueryClient();
+    const setAuth = useAuthActionsStore();
+
+    const { mutate: addLike } = useMutation({
+        mutationFn: async (variables: { catId: string }) => {
+            const res = await addLikesRequest(variables.catId);
+
+            if (!res.ok)
+                setAuth({
+                    isAuthenticated: false,
+                    token: '',
+                });
+            return (await res.json()) as LikeEntity;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['favorites'] });
+        },
+    });
+
+    const { mutate: deleteLike } = useMutation({
+        mutationFn: async (variables: { id: string }) => {
+            const res = await deleteLikeRequest(variables.id);
+            if (!res.ok)
+                setAuth({
+                    isAuthenticated: false,
+                    token: '',
+                });
+
+            return await res.json();
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['favorites'] });
+        },
+    });
+
     return (
         <div className={styles.ImagesGridContainer}>
-            {data.map((image) => (
-                <div className={styles.ImageCardContainer} key={image.id}>
-                    <div className={styles.ImageContainer}>
-                        <img src={image.url} />
-                    </div>
-                    <div className={styles.ImageCardActions}>
-                        <HeartButton />
-                    </div>
-                </div>
+            {!ids.length && <p>Ничего не найдено</p>}
+            {ids.map((id, ind) => (
+                <ImageCard
+                    cat_id={id}
+                    like_id={favorites.find((f) => f.cat_id === id)?.id}
+                    key={id + ind}
+                    isFavorite={favorites.some((f) => f.cat_id === id)}
+                    addLike={addLike}
+                    deleteLike={deleteLike}
+                />
             ))}
         </div>
     );
-};
+});
+
+ImagesGrid.displayName = 'ImagesGrid';
