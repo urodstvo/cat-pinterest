@@ -23,8 +23,6 @@ export class AuthService {
       },
     });
 
-    console.log(existingUser);
-
     if (existingUser) {
       const isPasswordsValid = compareSync(
         data.password,

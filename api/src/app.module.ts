@@ -17,7 +17,7 @@ import { LikeEntity } from './like/entities/like.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.local',
+      envFilePath: '.env',
       validationSchema: Joi.object({
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_USER: Joi.string().required(),

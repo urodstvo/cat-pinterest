@@ -19,8 +19,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         secret: configService.get<string>('JWT_SECRET'),
         signOptions: {
           expiresIn: parseInt(
-            // configService.getOrThrow<string>('JWT_LIVE_DURATION'),
-            '30',
+            configService.getOrThrow<string>('JWT_LIVE_DURATION'),
           ),
         },
       }),
