@@ -5,8 +5,8 @@ import { ImagesResponse } from '@/types';
 export const useGetImages = () =>
   useInfiniteQuery({
     queryKey: ['images'],
-    queryFn: async () => {
-      const res = await getImagesRequest();
+    queryFn: async ({ pageParam }) => {
+      const res = await getImagesRequest(pageParam);
       if (!res.ok) throw new Error('');
 
       const data = (await res.json()) as ImagesResponse;

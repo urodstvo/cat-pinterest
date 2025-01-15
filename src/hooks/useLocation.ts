@@ -3,16 +3,16 @@ import { useSyncExternalStore } from 'react';
 const getSnapshot = () => window.location.pathname;
 
 const subscribe = (callback: () => void) => {
-    const handle = () => {
-        callback();
+  const handle = () => {
+    callback();
 
-        return window.location.pathname;
-    };
+    return window.location.pathname;
+  };
 
-    window.addEventListener('popstate', handle);
-    return () => window.removeEventListener('popstate', handle);
+  window.addEventListener('popstate', handle);
+  return () => window.removeEventListener('popstate', handle);
 };
 
 export const useLocation = () => {
-    return useSyncExternalStore(subscribe, getSnapshot);
+  return useSyncExternalStore(subscribe, getSnapshot);
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ImagesGrid } from '@/components/ImagesGrid';
+import { ImagesGrid } from '@/components/images-grid';
 import { useTitle } from '@/hooks';
 
 import styles from './home.module.css';

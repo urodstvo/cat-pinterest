@@ -1,5 +1,5 @@
 import { useTitle } from '@/hooks';
-import { ImagesGrid } from '@/components/ImagesGrid';
+import { ImagesGrid } from '@/components/images-grid';
 import { useFavoritesStore } from '@/pages/provider';
 
 export const FavoritesPage = () => {

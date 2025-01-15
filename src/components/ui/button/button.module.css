@@ -1,18 +1,18 @@
 .Button {
-    width: clamp(fit-content, 300px, 100%);
-    height: 40px;
-    padding: 0 24px;
+  width: clamp(fit-content, 300px, 100%);
+  height: 40px;
+  padding: 0 24px;
 
-    border-radius: 20px;
+  border-radius: 20px;
 
-    background-color: var(--blue-primary);
+  background-color: var(--blue-primary);
 
-    color: #fff;
-    font-weight: 500;
+  color: #fff;
+  font-weight: 500;
 
-    transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 
-    &:hover {
-        background-color: var(--blue-selected);
-    }
+  &:hover {
+    background-color: var(--blue-selected);
+  }
 }
