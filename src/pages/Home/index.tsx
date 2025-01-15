@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ImagesGrid } from '@/components/images-grid';
 import { useTitle } from '@/hooks';
 
@@ -15,7 +15,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     if (inView) query.fetchNextPage();
-  }, [inView]);
+  }, [inView, query.fetchNextPage]);
 
   return (
     <main>
