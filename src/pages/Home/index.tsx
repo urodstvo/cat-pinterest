@@ -11,17 +11,15 @@ export const HomePage = () => {
 
   const { ref, inView } = useInView({ threshold: 0 });
 
-  const [data, setData] = useState<string[]>([]);
-
   const query = useGetImages();
 
   useEffect(() => {
-    if (inView) query.refetch();
+    if (inView) query.fetchNextPage();
   }, [inView]);
 
   return (
     <main>
-      {!query.isLoading && <ImagesGrid ids={data} />}
+      {!query.isLoading && <ImagesGrid data={query.data?.pages.flatMap((p) => p.map((i) => i.id)) || []} />}
       {(query.isLoading || query.isRefetching) && <div className={styles.Center}>... загружаем еще котиков ...</div>}
       {!query.isLoading && !query.isRefetching && !query.isError && (
         <div className={styles.Center} ref={ref}>

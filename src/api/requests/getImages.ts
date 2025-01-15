@@ -5,6 +5,7 @@ export const getImagesRequest = () => {
   const searchParams = new URLSearchParams();
 
   searchParams.append('limit', '15');
+  searchParams.append('order', 'desc');
   searchParams.append('size', 'thumb');
   searchParams.append('mime_types', 'jpg');
   searchParams.append('api_key', CAT_API_KEY);

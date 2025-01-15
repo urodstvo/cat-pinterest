@@ -1,19 +1,18 @@
 import { memo } from 'react';
+import { CardImageContainer, ImageCard } from './imageCard';
 
 import styles from './images-grid.module.css';
-import { CardFooter, CardImageContainer, ImageCard } from './imageCard';
 
-export const ImagesGrid = memo(({ ids }: { ids: string[] }) => {
-    return (
-        <div className={styles.ImagesGridContainer}>
-            {ids.map((id) => (
-                <ImageCard key={id} cat_id={id}>
-                    <CardImageContainer cat_id={id} />
-                    <CardFooter />
-                </ImageCard>
-            ))}
-        </div>
-    );
+export const ImagesGrid = memo(({ data }: { data: string[] }) => {
+  return (
+    <div className={styles.ImagesGridContainer}>
+      {data.map((id) => (
+        <ImageCard key={id} cat_id={id}>
+          <CardImageContainer cat_id={id} />
+        </ImageCard>
+      ))}
+    </div>
+  );
 });
 
 ImagesGrid.displayName = 'ImagesGrid';

@@ -5,7 +5,7 @@ import { Header } from '@/components/header';
 import { HomePage } from './Home';
 import { FavoritesPage } from './Favorites';
 import { Error404Page } from './404Error';
-import { Provider } from '@/components/Provider';
+import { Provider } from './provider';
 
 const routes = [HOME_PAGE_URL, FAVORITES_PAGE_URL];
 

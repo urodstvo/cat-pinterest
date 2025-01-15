@@ -1,7 +1,8 @@
 import { Link } from '@/components/Link';
-import styles from './header.module.css';
 import { FAVORITES_PAGE_URL, HOME_PAGE_URL } from '@/constants';
 import { useLocation } from '@/hooks';
+
+import styles from './header.module.css';
 
 export const Header = () => {
   const location = useLocation();
