@@ -8,7 +8,7 @@ export const FavoritesPage = () => {
 
   return (
     <main>
-      {!favorites.length && <p style={{ textAlign: 'center' }}>Ничего не найдено</p>}
+      {!favorites.length && <p style={{ textAlign: 'center', padding: '48px 0' }}>Ничего не найдено</p>}
       <ImagesGrid data={favorites} />
     </main>
   );

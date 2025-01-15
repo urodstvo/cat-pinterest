@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { Router } from '@/pages';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import './App.css';
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

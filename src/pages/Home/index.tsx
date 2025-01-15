@@ -20,10 +20,18 @@ export const HomePage = () => {
   return (
     <main>
       {!query.isLoading && <ImagesGrid data={query.data?.pages.flatMap((p) => p.map((i) => i.id)) || []} />}
-      {(query.isLoading || query.isRefetching) && <div className={styles.Center}>... загружаем еще котиков ...</div>}
+      {(query.isLoading || query.isRefetching || query.isFetchingNextPage) && (
+        <div className={styles.Center}>... загружаем еще котиков ...</div>
+      )}
       {!query.isLoading && !query.isRefetching && !query.isError && (
-        <div className={styles.Center} ref={ref}>
-          <button onClick={() => query.refetch()}>Загрузить больше котиков</button>
+        <div
+          className={styles.Center}
+          ref={ref}
+          style={{
+            opacity: query.isLoading || query.isRefetching || query.isFetchingNextPage ? 0 : 1,
+          }}
+        >
+          <button onClick={() => query.fetchNextPage()}>Загрузить больше котиков</button>
         </div>
       )}
     </main>
